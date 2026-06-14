@@ -2,7 +2,7 @@
 
 La app de adopción de la **clase 2** (galería + detalle + formulario), ahora **conectada al mundo**:
 
-- Los perritos se **guardan y leen desde Supabase** (la galería se actualiza en vivo con _realtime_; ya no son datos hardcodeados).
+- Los perritos se **guardan y leen desde Supabase** (ya no son datos hardcodeados): la galería se recarga al entrar y muestra los cambios.
 - En el formulario de **nuevo perrito**, el botón **"Foto aleatoria"** trae una foto real desde la **API pública dog.ceo** (sin API key) usando `HttpClient`.
 
 Es la continuación directa de `adopta-app`: misma estructura (modelo `Perro`, páginas galería/`detalle/:id`/`nuevo`, componente `tarjeta-perro`, `PerrosService`), pero el servicio ahora habla con Supabase y el formulario con una API.
@@ -43,9 +43,6 @@ alter table public.perros enable row level security;
 create policy "demo select" on public.perros for select using (true);
 create policy "demo insert" on public.perros for insert with check (true);
 create policy "demo update" on public.perros for update using (true);
-
--- Realtime: para que la galería se actualice sola al agregar/adoptar.
-alter publication supabase_realtime add table public.perros;
 
 -- Algunos perritos de ejemplo para no partir con la galería vacía:
 insert into public.perros (nombre, tipo, raza, edad, sexo, tamano, vacunada, descripcion, foto, adoptado) values

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { ViewWillEnter } from '@ionic/angular';
@@ -27,12 +27,11 @@ import { TarjetaPerroComponent } from '../../components/tarjeta-perro/tarjeta-pe
     TarjetaPerroComponent,
   ],
 })
-export class GaleriaPage implements ViewWillEnter, OnDestroy {
+export class GaleriaPage implements ViewWillEnter {
   private servicio = inject(PerrosService);
   filtro: 'todos' | 'disponibles' | 'adoptados' = 'todos';
   cargando = false;
   private todos: Perro[] = [];
-  private cancelar?: () => void;
 
   constructor() {
     addIcons({ add });
@@ -40,12 +39,6 @@ export class GaleriaPage implements ViewWillEnter, OnDestroy {
 
   async ionViewWillEnter() {
     await this.cargar();
-    // Realtime: si alguien agrega o adopta un perrito, la galería se actualiza sola.
-    this.cancelar = this.servicio.alCambiar(() => this.cargar());
-  }
-
-  ngOnDestroy() {
-    this.cancelar?.();
   }
 
   private async cargar() {

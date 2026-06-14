@@ -56,19 +56,4 @@ export class PerrosService {
       .eq('id', id);
     if (error) throw error;
   }
-
-  // Escucha cambios de la tabla en vivo (altas y adopciones). Devuelve cómo cancelar.
-  alCambiar(callback: () => void): () => void {
-    const canal = supabase
-      .channel('perros-realtime')
-      .on(
-        'postgres_changes',
-        { event: '*', schema: 'public', table: 'perros' },
-        () => callback(),
-      )
-      .subscribe();
-    return () => {
-      supabase.removeChannel(canal);
-    };
-  }
 }

@@ -75,9 +75,6 @@ create policy "demo select" on public.perros for select using (true);
 create policy "demo insert" on public.perros for insert with check (true);
 create policy "demo update" on public.perros for update using (true);
 
--- Realtime: para que la galería se actualice sola al agregar/adoptar.
-alter publication supabase_realtime add table public.perros;
-
 -- Perritos de ejemplo para no partir con la galería vacía:
 insert into public.perros (nombre, tipo, raza, edad, sexo, tamano, vacunada, descripcion, foto, adoptado) values
   ('Rocky', 'Perro', 'Labrador', '2 años', 'Macho', 'Grande', true,  'Juguetón y muy sociable. Le encanta correr en el parque.', 'https://placedog.net/600/600?id=1', false),
@@ -147,13 +144,12 @@ ionic serve
 Si todo quedó bien:
 - La **galería** muestra a **Rocky, Luna y Toby** (Luna sale "Adoptado").
 - Con el botón **+** creas un perrito nuevo; prueba el botón **"Foto aleatoria"** (trae la foto desde una API).
-- En la **ficha** de un perrito, **Adoptar** lo marca… y la galería se actualiza **sola** (eso es *realtime*). Pruébalo con dos pestañas abiertas y se ve la magia. ✨
+- En la **ficha** de un perrito, **Adoptar** lo marca como adoptado; al **volver a la galería** aparece con el badge «Adoptado».
 
 ---
 
 ## ¿Algo no funciona?
 - **La galería sale vacía o tira error** → casi siempre son las credenciales: revisa que la **URL** y la **llave** estén completas y bien pegadas, que sea la **publishable** (`sb_publishable_…`, **no** la `sb_secret_…`), y que hayas corrido el SQL del Paso 3.
-- **No se actualiza solo (realtime)** → revisa que en el SQL corriera la línea `alter publication supabase_realtime add table public.perros;`.
 - **Aviso de que la llave es "pública"** → es normal y seguro: la publishable key está hecha para vivir en el cliente; lo que protege los datos es **RLS** (acá abierto a propósito para la clase).
 
 > 🔒 **Nunca** uses la **Secret key** (`sb_secret_…`) en la app ni la subas a un repo: esa es la llave de administrador.
