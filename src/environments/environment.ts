@@ -3,6 +3,6 @@
 // los datos es RLS (ver README).
 export const environment = {
   produccion: false,
-  supabaseUrl: "https://lylpoiyjxcgkzsnbsxti.supabase.co",
-  supabaseAnonKey: "sb_publishable_j7Q0i71Hbpr19YI4Q3orpA_iyxx3bJe", // sb_publishable_...
+  supabaseUrl: "https://swppscwmfabmsblcurjw.supabase.co",
+  supabaseAnonKey: "sb_publishable_B35frehnoG7vMf_GEODvxg_Ftdxj1dZ", // sb_publishable_...
 };
